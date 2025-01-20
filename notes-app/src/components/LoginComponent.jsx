@@ -13,7 +13,8 @@ function LoginComponent() {
             const response = await loginEndpoint(username, password);
             if (response) {
                 alert("Login successful!");
-                navigate("/dashboard");
+                console.log(response.user);
+                navigate(`/dashboard/${response.user.username}`);
             }
             else{
                 console.log(response)

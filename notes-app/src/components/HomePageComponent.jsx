@@ -2,17 +2,21 @@ import React, { useState, useEffect, useCallback } from "react";
 import PopupComponent from "./PopupComponent";
 import NotesGridComponent from "./NotesGridComponent";
 import { fetchCardsEndpoint, addCardEndpoint } from "../endpoints/datafetch";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 
 function HomePageComponent() {
   const [cards, setCards] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  // const [username,setUsername] = useState(useParams());
+  const {username} = useParams();
+  // console.log(username);
   const [loginStatus, setLoginStatus] = useState(true);
   const fetchCards = useCallback(async () => {
-    const data = await fetchCardsEndpoint();
+    const data = await fetchCardsEndpoint(username);
     setCards(data);
-  }, []);
+  }, [username]);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     fetchCards();
@@ -22,7 +26,7 @@ function HomePageComponent() {
 
   const closePopup = async (title, content) => {
     if (title && content) {
-      const newNote = await addCardEndpoint(title, content);
+      const newNote = await addCardEndpoint(username,title, content);
 
       if (newNote) {
         setCards((prevCards) => [...prevCards, newNote]);
@@ -57,7 +61,7 @@ function HomePageComponent() {
             className="btn btn-primary me-4 px-4 py-2 rounded-pill"
             onClick={addNote}
             style={{
-              fontSize: "1.5rem",
+              fontSize: "0.8rem",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
               transition: "all 0.3s ease",
             }}
@@ -67,10 +71,10 @@ function HomePageComponent() {
             + Add Note
           </button>
           <button
-            className="btn btn-outline-danger px-5 py-2 rounded-pill"
+            className="btn btn-outline-danger px-4 py-2 rounded-pill"
             onClick={logout}
             style={{
-              fontSize: "1rem",
+              fontSize: "0.8rem",
               fontWeight: "500",
               border: "2px solid #E74C3C",
               color: "#E74C3C",
@@ -84,7 +88,7 @@ function HomePageComponent() {
         </div>
       </div>
 
-      <NotesGridComponent cards={cards} setCards={setCards} />
+      <NotesGridComponent username={username} cards={cards} setCards={setCards} />
 
       {showPopup && (
         <PopupComponent

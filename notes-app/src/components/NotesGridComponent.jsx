@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import CardComponent from "./CardComponent";
 import { fetchCardsEndpoint, deleteCardEndpoint } from "../endpoints/datafetch";
 
-function NotesGridComponent({ cards, setCards }) {
+function NotesGridComponent({ username,cards, setCards }) {
   const [selectedCard, setSelectedCard] = useState(null);
 
   const fetchCards = useCallback(async () => {
-    const data = await fetchCardsEndpoint();
+    const data = await fetchCardsEndpoint(username);
     setCards(data);
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     fetchCards();

@@ -2,11 +2,11 @@ const notes = require('../models/modelnote');
 
 const addNote = async(req, res)=>
 {
-    const {title, content, notename} = req.body;
+    const {username,title, content, notename} = req.body;
 
     try
     {
-        const newNote = new notes({title, content, notename});
+        const newNote = new notes({username,title, content, notename});
         const result = await newNote.save();
         res.status(201).json(result);
     }
@@ -20,7 +20,7 @@ const getNotes = async(req, res) =>
 {
     try
     {
-        const notesList = await notes.find();
+        const notesList = await notes.find({"username":req.params.username});
         res.status(201).json(notesList);
     }
     catch(error)

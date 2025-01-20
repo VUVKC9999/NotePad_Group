@@ -1,8 +1,8 @@
 const baseUrl = "http://localhost:4000";
 
-export const fetchCardsEndpoint = async () => {
+export const fetchCardsEndpoint = async (username) => {
   try {
-    const response = await fetch(baseUrl + "/notepad/get-note", { method: "GET" });
+    const response = await fetch(baseUrl + `/notepad/get-note/${username}`, { method: "GET" });
     if (response.ok) {
       return await response.json();
     } else {
@@ -34,12 +34,12 @@ export const deleteCardEndpoint = async (id) => {
   }
 };
 
-export const addCardEndpoint = async (title, content) => {
+export const addCardEndpoint = async (username,title, content) => {
   try {
     const response = await fetch(`${baseUrl}/notepad/add-note`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ username,title, content }),
     });
 
     if (response.ok) {

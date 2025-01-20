@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<LoginComponent/>}></Route>
           <Route path="/login" element={<LoginComponent/>}></Route>
           <Route path="/register" element={<RegisterComponent/>}></Route>
-          <Route path="/dashboard" element={<HomePageComponent/>}></Route>
+          <Route path="/dashboard/:username" element={<HomePageComponent/>}></Route>
         </Routes>
       </div>
     </Router>
