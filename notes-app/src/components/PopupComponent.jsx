@@ -10,49 +10,78 @@ function PopupComponent({ onSave, onCancel }) {
 
   return (
     <div
-      className="popup-overlay d-flex justify-content-center align-items-center"
+      className="modal fade show d-block"
+      tabIndex="-1"
       role="dialog"
-      aria-labelledby="add-note-title"
-      aria-modal="true"
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: 1000,
-      }}
+      aria-labelledby="addNoteModal"
+      aria-hidden="true"
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
     >
       <div
-        className="popup-content bg-white p-4 rounded"
-        style={{ width: "400px" }}
+        className="modal-dialog modal-dialog-centered"
+        role="document"
+        style={{ maxWidth: "500px" }}
       >
-        <h3 id="add-note-title" className="mb-3">Add Note</h3>
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          className="form-control mb-3"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <label htmlFor="content">Content</label>
-        <textarea
-          id="content"
-          className="form-control mb-3"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        ></textarea>
-        <div className="d-flex justify-content-between">
-          <button className="btn btn-primary" onClick={handleSave}>
-            Save
-          </button>
-          <button className="btn btn-secondary" onClick={onCancel}>
-            Cancel
-          </button>
+        <div className="modal-content shadow-lg rounded-3">
+          <div className="modal-header bg-primary text-white">
+            <h5 className="modal-title" id="addNoteModal">
+              Add Note
+            </h5>
+            {/* <button
+              type="button"
+              className="close text-white"
+              aria-label="Close"
+              onClick={onCancel}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button> */}
+          </div>
+          <div className="modal-body p-4">
+            <form>
+              <div className="form-group mb-3">
+                <label htmlFor="title" className="form-label">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  className="form-control"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="content" className="form-label">
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  className="form-control"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={onCancel}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

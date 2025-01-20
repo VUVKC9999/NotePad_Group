@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function HomePageComponent() {
   const [cards, setCards] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [loginStatus, setloginStatus] = useState(true);
+  const [loginStatus, setLoginStatus] = useState(true);
   const fetchCards = useCallback(async () => {
     const data = await fetchCardsEndpoint();
     setCards(data);
@@ -25,7 +25,6 @@ function HomePageComponent() {
       const newNote = await addCardEndpoint(title, content);
 
       if (newNote) {
-        console.log("Note added successfully", newNote);
         setCards((prevCards) => [...prevCards, newNote]);
       } else {
         console.error("Failed to add note.");
@@ -37,11 +36,9 @@ function HomePageComponent() {
   };
 
   const logout = () => {
-    setloginStatus(false);
-    console.log(`prev:${localStorage}\n${sessionStorage}`);
+    setLoginStatus(false);
     localStorage.clear();
     sessionStorage.clear();
-    console.log(`after:${localStorage}\n${sessionStorage}`);
     document.cookie.split(";").forEach((cookie) => {
       const cookieName = cookie.split("=")[0].trim();
       document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
@@ -50,43 +47,52 @@ function HomePageComponent() {
   };
 
   return (
-    <>
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <h1 className="text-center mb-0 mx-auto">Homepage</h1>
-        <div className="d-flex ml-auto p-3">
+    <div className="container mt-3">
+      <div className="d-flex align-items-center justify-content-between mb-5">
+        <h1 className="text-center mb-0 mx-auto" style={{ fontSize: "2rem", fontWeight: "600", color: "#4A90E2" }}>
+          Welcome to Your Notes
+        </h1>
+        <div className="d-flex ml-auto">
           <button
-            className="btn btn-primary"
+            className="btn btn-primary me-4 px-4 py-2 rounded-pill"
             onClick={addNote}
             style={{
-              fontSize: "19px",
-              backgroundColor: "gray",
-              color: "white",
+              fontSize: "1.5rem",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              transition: "all 0.3s ease",
             }}
+            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
           >
-            +
+            + Add Note
           </button>
           <button
-            className="btn btn-primary"
+            className="btn btn-outline-danger px-5 py-2 rounded-pill"
             onClick={logout}
             style={{
-              fontSize: "19px",
-              backgroundColor: "gray",
-              color: "white",
+              fontSize: "1rem",
+              fontWeight: "500",
+              border: "2px solid #E74C3C",
+              color: "#E74C3C",
+              transition: "all 0.3s ease",
             }}
+            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
           >
-            logout
+            Logout
           </button>
         </div>
       </div>
 
       <NotesGridComponent cards={cards} setCards={setCards} />
+
       {showPopup && (
         <PopupComponent
           onSave={closePopup}
           onCancel={() => setShowPopup(false)}
         />
       )}
-    </>
+    </div>
   );
 }
 

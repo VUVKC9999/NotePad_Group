@@ -15,9 +15,10 @@ function LoginComponent() {
                 alert("Login successful!");
                 navigate("/dashboard");
             }
-            // else{
-            //     alert(response.message)
-            // }
+            else{
+                console.log(response)
+                alert(response.message)
+            }
         } catch (error) {
             console.error("Login failed:", error);
             alert("Invalid email or password. Please try again.");
@@ -25,43 +26,43 @@ function LoginComponent() {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-            <div className="bg-white p-3 rounded w-25">
-                <h2>Login</h2>
+        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+            <div className="card shadow-lg p-4" style={{ width: "400px", borderRadius: "10px" }}>
+                <h2 className="text-center text-primary mb-4">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="email">
+                        <label htmlFor="username" className="form-label">
                             <strong>Username</strong>
                         </label>
                         <input
                             type="text"
                             id="username"
-                            placeholder="Enter Usename"
-                            className="form-control rounded-0"
+                            placeholder="Enter Username"
+                            className="form-control"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="password">
+                        <label htmlFor="password" className="form-label">
                             <strong>Password</strong>
                         </label>
                         <input
                             type="password"
                             id="password"
                             placeholder="Enter Password"
-                            className="form-control rounded-0"
+                            className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary w-100 rounded-0">
+                    <button type="submit" className="btn btn-primary w-100 mb-3">
                         Login
                     </button>
                 </form>
-                <p>Don't have an account?</p>
+                <p className="text-center mb-3">Don't have an account?</p>
                 <button
-                    className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none"
+                    className="btn btn-outline-secondary w-100"
                     onClick={() => navigate("/register")}
                 >
                     Register
@@ -69,6 +70,6 @@ function LoginComponent() {
             </div>
         </div>
     );
-}
+}    
 
 export default LoginComponent;
